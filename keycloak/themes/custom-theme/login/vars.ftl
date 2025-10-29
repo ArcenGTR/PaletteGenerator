@@ -1,0 +1,1 @@
+<#assign frontendUrl = "http://localhost:4200">

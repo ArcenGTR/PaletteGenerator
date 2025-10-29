@@ -1,0 +1,183 @@
+\documentclass{mwart}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{polski}
+\usepackage{amssymb}
+\usepackage[a4paper]{geometry}
+
+\newcommand{\NI}{{\mathbb N}}
+\newcommand{\ER}{{\mathbb R}}
+\newcommand{\ZE}{{\mathbb Z}}
+
+\title{Ćwiczenie 3}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Matma tego typu}
+
+\subsection{Dwumian Newtona}
+\em
+
+Przypominam czytelnikowi wzór na symbol Newtona:
+
+$$\binom{n}{k} = \frac{n!}{k!(n-k)!}$$  % to jest symbol Newtona, a wyżej Pan pisze, że to dwumian
+
+\subsection{Wzór Newtona}
+
+Zatem wzór Newtona to:
+
+$(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^k b^{n-k}$, $a\in\NI; b\in\NI$
+
+\section{Przykłady błędne, na których nie powinniśmy bazować}
+
+\subsection{Kontrprzykład 1}
+
+Niech ${a, b}\in\NI$
+
+$\sqrt[3]{a + b} \neq \sqrt[3]{a} + \sqrt[3]{b}$, $a \neq b \neq 0$
+
+np. $a = 64, b = 8$
+
+Wtedy: $L = \sqrt[3]{64 + 8} = 2\sqrt[3]{9}$
+
+$P = \sqrt[3]{64} + \sqrt[3]{8} = 4 + 2 = 6$
+
+$2\sqrt[3]{9} \neq 6$
+
+$L \neq P$
+
+$\square$
+
+\section{Wyznaczanie dziedziny funkcji}
+
+\subsection{Dziedzina funkcji nr. 1}
+
+Niech wzorem funkcji $f$ będzie:
+
+$$f(x) = \sqrt{\log_\frac{1}{2}{(x^2 - 2)}}$$
+
+Wiemy, że funkcja jest określona na przedziale liczb nieujemnych, więc całe wyrażenie:
+
+$$\log_\frac{1}{2}{(x^2 - 2)} \in [0, \infty)$$
+
+Następnie, wiedząc że $\frac{1}{2} \in(0, \infty)$ oraz $\frac{1}{2} \neq 1$, musimy założyć:
+
+$$(x^2 -2) > 0$$
+
+$$(x - \sqrt{2})(x + \sqrt{2}) > 0$$
+
+$$x \in (-\infty, -\sqrt{2}) \cup (\sqrt{2}, \infty)$$
+
+Cały logarytm również musi być większy od zera, więc:
+
+$$\log_\frac{1}{2}{(x^2 - 2)} \geq 0$$
+
+$$\log_\frac{1}{2}{(x^2 - 2)} \geq \log_\frac{1}{2}{1}$$
+
+Funkcja $\log_\frac{1}{2}{(x^2 - 2)}$ jest funkcją malejącą w przedziale $[0, 1]$, zatem należy zmienić znak nierówności:
+
+$$x^2 - 2 \leq 1$$
+
+$$x^2 - 3 \leq 0$$
+
+$$(x - \sqrt{3})(x + \sqrt{3}) \leq 0$$
+
+$$x \in [-\sqrt{3}, \sqrt{3}]$$
+
+Zatem koniunkcją wszystkich zbiorów dziedziny $D$ będzie:
+
+$$x \in [-\sqrt{3}, -\sqrt{2}) \cup (\sqrt{2}, \sqrt{3}]$$
+
+\subsection{Tożsamość trygonometrzyczna 1}
+
+$$\frac{\sin{(2\alpha)}}{1 + \cos{(2\alpha)}} \frac{\cos{(\alpha)}}{1+\cos(\alpha)} = \tg{\frac{\alpha}{2}}$$
+
+Zacznijmy od podstawowych tożsamości, z których skorzystamy:
+
+\begin{itemize}
+
+\item{$\sin{(2\alpha)} = 2\sin{(\alpha)}\cos{(\alpha)}$}
+
+\item{$\cos{(2\alpha)} = \cos^2{(\alpha)} - \sin^2{(\alpha)}$}
+
+\item{$\tg{(\alpha)} = \frac{sin{(\alpha)}}{\cos{(\alpha)}}$}
+
+\end{itemize}
+
+Zatem rozwiążmy tożsamość:
+
+%\begin{align*}
+
+$$\dfrac{\sin{(2\alpha)}}{1 + \cos{(2\alpha)}} \dfrac{\cos{(\alpha)}}{1+\cos(\alpha)} = \tg{\dfrac{\alpha}{2}}, x \neq \dfrac{\pi}{2} + k\pi \vee x \neq \pi + 2k\pi, k\in\ZE$$
+
+$L = \dfrac{\sin{(2\alpha)}}{1 + \cos{(2\alpha)}} \dfrac{\cos{(\alpha)}}{1+\cos(\alpha)} = \dfrac{2\sin{(\alpha)}\cos^2{(\alpha)}}{(1 + \cos{(2\alpha)})(1+\cos(\alpha))} = \dfrac{2\sin{(\alpha)}\cos^2(\alpha)}{(1 + 2\cos^2{(\alpha) - 1){(1+\cos{(\alpha)})}}} = \dfrac{2\sin{(\alpha)}\cos^2(\alpha)}{2\cos^2{(\alpha)}(1+\cos{(\alpha)})} = \dfrac{sin(\alpha)}{1+\cos{(\alpha)}} = \tg{\dfrac{\alpha}{2}}$
+
+$P = \tg{\dfrac{\alpha}{2}}$
+
+$L = P$
+
+$\square$
+
+%\end{align*} środowisko align* pokazuje ~10 błędów, mimo, że wszystkie komendy wpisane są teoretycznie poprawnie (ze znakiem "$" i bez są błędy)
+
+\section{Macierze}
+
+\subsection{Wprowadzenie do macierzy}
+
+$\begin{bmatrix} 5 & 4 \\ 3 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 7 \\ 4 \end{bmatrix}$
+
+$M = \begin{bmatrix} 5 & 4 \\ 3 & 1 \end{bmatrix}$
+
+$\det(M) = \begin{vmatrix} 5 & 4 \\ 3 & 1 \end{vmatrix} = 5 \times 1 - 3 \times 4 = (-7)$
+
+$\det(M_x) = \begin{vmatrix} 7 & 4 \\ 4 & -1 \end{vmatrix} = 7 \times (-1) - 4 \times 4 = (-23)$
+
+$\det(M_y) = \begin{vmatrix} 5 & -3 \\ 7 & 4 \end{vmatrix} = 5 \times 4 - 7 \times (-3) = 41$
+
+$x = \dfrac{W_x}{W} = \dfrac{(-23}{(-7)} = \dfrac{(23}{(7)}$
+
+$y = \dfrac{W_y}{W} = \dfrac{41}{(-7)} = -\dfrac{41}{7}$
+
+$\begin{cases}
+    x = \dfrac{(23}{(7)}\\
+    y = -\dfrac{41}{7}
+\end{cases}$
+
+\section{Zadania z dziedzinami funkcji}
+
+\subsection{Zadanie 1}
+
+Czy istnieje funkcja $f$, która jest równa każdej z trzech funkcji $f_1, f_2 i f_3$ na jej dziedzinie, gdzie:
+
+$f_1(x) = \log_3{(x-3)}, f_2(x) = \sqrt{9 - x^2}, f_3 = \log_5{(-(3+x))}$
+
+$D_{f_1}: x-3 > 0$
+
+$D_{f_1}: x > 3$
+
+$D_{f_1}: x\in(3, \infty)$
+
+$D_{f_2}: 9 - x^2 \geq 0$
+
+$D_{f_2}: (3-x)(3+x) \geq 0$
+
+$D_{f_2}: x\in[-3,3]$
+
+$D_{f_3}: -(3+x) > 0$
+
+$D_{f_3}: x < -3$
+
+$D_{f_3}: x\in(-\infty, -3)$
+
+$D_{f_3} \neq D_{f_2} \neq D_{f_1}$
+
+Zbiory wzorów funkcji $f$ są rozłączne, zatem:
+
+$f(x) = \begin{cases} \log_3{(x-3)}, gdy \;x\in(3, \infty) \\  \sqrt{9 - x^2}, gdy \;x\in[-3,3] \\ \log_5{(-(3+x))}, gdy \; x\in(-\infty, -3) \end{cases}$
+
+\end{document}

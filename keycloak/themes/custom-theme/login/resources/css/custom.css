@@ -1,0 +1,100 @@
+/* Общие стили для контейнера */
+.auth-container {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-top: 2rem;
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Стили для полей ввода */
+.input-field {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Стили для кнопок */
+.login-button {
+    width: 100%;
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.google-login-button {
+    width: 100%;
+    background-color: #f3f4f6; /* gray-100 */
+    color: #4b5563; /* gray-700 */
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.google-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Стили для разделителя */
+.divider {
+    text-align: center;
+    margin: 1rem 0;
+    color: #6b7280; /* gray-500 */
+    font-size: 0.875rem;
+}
+
+/* Вкладки */
+.kc-tabs {
+    /* стили для табов */
+}
+
+.kc-tab-header {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.kc-tab-link {
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.kc-tab-link.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+    font-weight: 600;
+}
+
+/* Дополнительные стили, которые вы можете добавить */
+.text-2xl { font-size: 1.5rem; }
+.font-semibold { font-weight: 600; }
+.mb-6 { margin-bottom: 1.5rem; }
+.text-center { text-align: center; }
+.text-gray-800 { color: #1f2937; }
+.text-blue-500 { color: #3b82f6; }
+.hover\:text-blue-700:hover { color: #1d4ed8; }
+.flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.mb-4 { margin-bottom: 1rem; }
