@@ -1,0 +1,78 @@
+<div class="kohonen-map-viewer-container bg-white p-6 rounded-lg shadow-md mt-8">
+  <h2 class="text-2xl font-semibold mb-4 text-center text-gray-800">Self-Organizing Map (SOM)</h2>
+
+  <div *ngIf="kohonenMap && kohonenMap.length > 0 && mapWidth > 0 && mapHeight > 0"
+       class="main-content grid grid-cols-1 md:grid-cols-[150px_1fr] gap-6">
+
+    <div *ngIf="imageUrl" class="image-preview-column flex items-center justify-center p-2 border border-gray-200 rounded-md bg-gray-50 overflow-hidden min-h-[150px] min-w-[250px]">
+      <img [src]="imageUrl" alt="Source Image" class="max-w-full max-h-full object-contain rounded-sm" />
+    </div>
+
+    <div class="map-and-controls-column flex flex-col items-center">
+      <div class="controls-container flex justify-center gap-6 mb-6 w-full">
+        <div>
+          <label class="block text-gray-600 font-medium mb-2 text-center">Display Format:</label>
+          <nz-radio-group [(ngModel)]="currentFormat" (ngModelChange)="onFormatChange()" nzButtonStyle="solid">
+            <label nz-radio-button nzValue="rgb">RGB</label>
+            <label nz-radio-button nzValue="hex">HEX</label>
+            <label nz-radio-button nzValue="hsl">HSL</label>
+          </nz-radio-group>
+        </div>
+
+        <div>
+          <label class="block text-gray-600 font-medium mb-2 text-center">Cell Gaps:</label>
+          <nz-radio-group [(ngModel)]="internalShowGaps" (click)="onGapChange()" nzButtonStyle="solid">
+            <label nz-radio-button [nzValue]="true">Show Gaps</label>
+            <label nz-radio-button [nzValue]="false">No Gaps</label>
+          </nz-radio-group>
+        </div>
+      </div>
+
+      <div id="kohonen-map-grid"
+           class="flex flex-wrap justify-center p-1 border border-gray-300 rounded-md bg-gray-100 mx-auto"
+           [class.gap-px]="internalShowGaps"
+           [style.grid-template-columns]="'repeat(' + mapWidthFixed + ', ' + cellSizePx + 'px)'"
+           [style.display]="'grid'">
+
+        <div *ngFor="let cellColor of displayColors"
+             class="flex items-center justify-center text-xs text-gray-800 cursor-pointer group relative"
+             [style.background-color]="cellColor.hex" [style.width.px]="cellSizePx"
+             [style.height.px]="cellSizePx"
+             (click)="copyColorToClipboard(cellColor.formatted)"
+             [title]="'Click to copy: ' + cellColor.formatted">
+        </div>
+      </div>
+
+      <div class="flex items-end justify-end mt-4">
+        <button nz-button 
+                nzType="primary" 
+                nzSize="large" 
+                (click)="savePalette()" 
+                [disabled]="!paletteItem || !paletteItem.kohonenMap || paletteItem.kohonenMap.length === 0 || !keycloakService.isLoggedIn()"
+                [nzTooltipTitle]="!keycloakService.isLoggedIn() ? 'Please log in to save your palette history.' : null"
+                [nzTooltipPlacement]="'top'"
+                nz-tooltip
+                *ngIf="!isModalView">
+          <nz-icon nzType="save" nzTheme="outline"></nz-icon>
+          Save Palette
+        </button>
+
+        <button nz-button 
+                nzType="default" 
+                nzSize="large" 
+                (click)="publishPalette()" 
+                [disabled]="!paletteItem || !paletteItem.kohonenMap || paletteItem.kohonenMap.length === 0 || !keycloakService.isLoggedIn()"
+                [nzTooltipTitle]="!keycloakService.isLoggedIn() ? 'Please log in to publish your palette.' : null"
+                [nzTooltipPlacement]="'top'"
+                nz-tooltip
+                *ngIf="!isModalView">
+          <nz-icon nzType="upload" nzTheme="outline" />
+          Publish Palette
+        </button>
+      </div>
+  </div>
+
+  <div *ngIf="!kohonenMap || kohonenMap.length === 0" class="text-gray-500 text-center w-full mt-4">
+      Kohonen map is empty or not available.
+  </div>
+</div>

@@ -1,0 +1,191 @@
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
+  <h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">Community Palettes</h1>
+
+  <div class="flex justify-center mb-6">
+    <nz-segmented 
+      [ngModel]="currentView$ | async" 
+      (ngModelChange)="currentView$.next($event)"
+      [nzOptions]="views">
+    </nz-segmented>
+  </div>
+
+  <hr class="my-6">
+
+  <!-- Filters -->
+  <div class="filters-container p-4 bg-gray-50 rounded-lg shadow-inner mb-6">
+    <h3 class="text-xl font-medium mb-4 text-gray-700">Filters</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-gray-600 font-medium mb-2">Method:</label>
+        <nz-select 
+          nzAllowClear 
+          [ngModel]="(filters$ | async)?.filterMethods" 
+          (ngModelChange)="updateFilter({ filterMethods: $event })" 
+          nzMode="multiple" 
+          nzPlaceHolder="Select palette type" 
+          class="w-full">
+          <nz-option nzValue="kmeans" nzLabel="K-Means"></nz-option>
+          <nz-option nzValue="hierarchical" nzLabel="Hierarchical"></nz-option>
+          <nz-option nzValue="som" nzLabel="Self-organizing Map"></nz-option>
+        </nz-select>
+      </div>
+
+      <ng-container *ngIf="(filters$ | async)?.filterMethods!.length > 0">
+        <div *ngIf="(filters$ | async)?.filterMethods!.includes('kmeans')">
+          <label class="block text-gray-600 font-medium mb-2">Number of K-Means Colors:</label>
+          <nz-slider 
+            [ngModel]="(filters$ | async)?.kMeansFilterColorCountRange" 
+            [nzRange]="true" 
+            [nzMin]="1" 
+            [nzMax]="16"
+            (ngModelChange)="updateFilter({ kMeansFilterColorCountRange: $event })">
+          </nz-slider>
+          <div class="text-sm text-gray-500 text-center">
+            {{ (filters$ | async)!.kMeansFilterColorCountRange[0] }} - {{ (filters$ | async)!.kMeansFilterColorCountRange[1] }}
+          </div>
+        </div>
+
+        <div *ngIf="(filters$ | async)?.filterMethods!.includes('hierarchical')">
+          <label class="block text-gray-600 font-medium mb-2">Number of Hierarchical Colors:</label>
+          <nz-slider 
+            [ngModel]="(filters$ | async)?.hierarchicalFilterColorCountRange" 
+            [nzRange]="true" 
+            [nzMin]="1" 
+            [nzMax]="16"
+            (ngModelChange)="updateFilter({ hierarchicalFilterColorCountRange: $event })">
+          </nz-slider>
+          <div class="text-sm text-gray-500 text-center">
+            {{ (filters$ | async)!.hierarchicalFilterColorCountRange[0] }} - {{ (filters$ | async)!.hierarchicalFilterColorCountRange[1] }}
+          </div>
+        </div>
+
+        <div *ngIf="(filters$ | async)?.filterMethods!.includes('som')">
+          <label class="block text-gray-600 font-medium mb-2">SOM Map Width:</label>
+          <nz-slider
+            [ngModel]="(filters$ | async)?.filterSomWidth"
+            [nzRange]="true"
+            [nzMin]="4"
+            [nzMax]="30"
+            (ngModelChange)="updateFilter({ filterSomWidth: $event })">
+          </nz-slider>
+          <div class="text-sm text-gray-500 text-center">
+            {{ (filters$ | async)?.filterSomWidth?.[0] }} - {{ (filters$ | async)?.filterSomWidth?.[1] }}
+          </div>
+
+          <label class="block text-gray-600 font-medium mb-2 mt-4">SOM Map Height:</label>
+          <nz-slider
+            [ngModel]="(filters$ | async)?.filterSomHeight"
+            [nzRange]="true"
+            [nzMin]="4"
+            [nzMax]="30"
+            (ngModelChange)="updateFilter({ filterSomHeight: $event })">
+          </nz-slider>
+          <div class="text-sm text-gray-500 text-center">
+            {{ (filters$ | async)?.filterSomHeight?.[0] }} - {{ (filters$ | async)?.filterSomHeight?.[1] }}
+          </div>
+        </div>
+
+      </ng-container>
+
+      <div>
+        <label class="block text-gray-600 font-medium mb-2">Search by User:</label>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" nz-input placeholder="Enter username" [ngModel]="(filters$ | async)?.filterUsername" (ngModelChange)="updateFilter({filterUsername: $event})" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch><nz-icon nzType="search" /></button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Palettes -->
+  <div *ngIf="(filteredPalettes$ | async) as palettes">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <div *ngIf="palettes.length === 0" class="col-span-full text-center py-8 text-gray-500">
+        No palettes found.
+      </div>
+
+      <ng-container *ngFor="let palette of palettes">
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col">
+          <div *ngIf="palette.method === 'kmeans'" class="flex h-32 rounded overflow-hidden mb-4">
+            <div *ngFor="let c of getKMeansFlatColors(palette.palette)" class="flex-1" [style.backgroundColor]="c"></div>
+          </div>
+
+          <div *ngIf="palette.method === 'hierarchical'" class="flex h-32 rounded overflow-hidden mb-4">
+            <div *ngFor="let c of getHierarchicalFlatColors(palette.mergeHistory)" class="flex-1" [style.backgroundColor]="c"></div>
+          </div>
+
+          <div *ngIf="palette.method === 'som'"
+              class="relative w-full h-32 mb-4 rounded overflow-hidden border border-gray-200"
+              [style.--cols]="palette.kohonenMap[0].length"
+              [style.--rows]="palette.kohonenMap.length"
+              [style.display]="'grid'"
+              [style.gridTemplateColumns]="'repeat(' + palette.kohonenMap[0].length + ', 1fr)'"
+              [style.gridTemplateRows]="'repeat(' + palette.kohonenMap.length + ', 1fr)'">
+            
+            <ng-container *ngFor="let row of palette.kohonenMap">
+              <ng-container *ngFor="let color of row">
+                <div class="w-full h-full" [style.backgroundColor]="'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')'">
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+
+
+          <!-- Metadata & Buttons -->
+          <div class="flex justify-between text-gray-600 text-sm mb-2">
+            <button
+              *ngIf="isPaletteInUserVotes(palette.paletteId); else voteButton"
+              nz-button nzType="primary" nzSize="small"
+              (click)="onUnvote(palette.paletteId)">
+              <nz-icon nzType="fire" nzTheme="outline" />
+              <span>{{ palette.votes }}</span>
+            </button>
+
+            <ng-template #voteButton>
+              <button
+                nz-button nzType="default" nzSize="small"
+                (click)="onVote(palette.paletteId)">
+                <nz-icon nzType="fire" nzTheme="outline" />
+                <span>{{ palette.votes }}</span>
+              </button>
+            </ng-template>
+
+            <span>{{ palette.method | titlecase }}</span>
+          </div>
+
+          <button
+            *ngIf="(currentView$ | async) === 'my-palettes' && palette.saved && !palette.published"
+            nz-button nzType="primary" nzSize="small"
+            (click)="onPublish(palette.paletteId)">
+            <nz-icon nzType="upload" nzTheme="outline"></nz-icon>
+            Publish
+          </button>
+
+          <button 
+            *ngIf="(currentView$ | async) === 'my-palettes'"
+            nz-button nzType="default" nzDanger nzSize="small"
+            (click)="confirmDeletePalette(palette.paletteId)">
+            <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
+            Delete
+          </button>
+
+          <button 
+            nz-button 
+            nzType="default" 
+            nzSize="small" 
+            (click)="openPaletteDetails(palette)">
+            <nz-icon nzType="eye" nzTheme="outline"></nz-icon>
+            See details
+          </button>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <div #observer class="h-16 flex justify-center items-center text-gray-400">
+      <nz-spin *ngIf="isLoadingMore" nzSimple></nz-spin>
+    </div>
+</div>

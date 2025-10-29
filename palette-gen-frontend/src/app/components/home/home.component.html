@@ -1,0 +1,143 @@
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
+  <h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">Color Palette Generator</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 min-h-[400px] relative overflow-hidden">
+
+      <h2 *ngIf="!imageUrl" class="text-xl font-medium mb-4 text-gray-700">Upload image</h2>
+
+      <div class="grid grid-cols-[auto_1fr_auto] w-full h-full">
+        <div class="h-full">
+          <!--Placeholder for right aligning-->
+        </div>
+
+        <div class="flex flex-col items-center justify-center h-full">
+          <ng-container *ngIf="!imageUrl">
+            <div class="file-input-wrapper">
+              <label for="file-upload">
+                <nz-icon nzType="upload" nzTheme="outline" class="text-5xl transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer" />
+              </label>
+              
+              <input id="file-upload" 
+                    type="file" 
+                    accept="image/png, image/jpeg, image/jpg"
+                    (change)="onFileSelected($event)"
+                    hidden />
+            </div>
+
+            <p class="text-sm text-gray-500 mt-2 pt-1">Available formats: PNG, JPG, JPEG</p>
+          </ng-container>
+
+          <div *ngIf="imageUrl" class="flex items-center justify-center w-full h-full">
+            <img [src]="imageUrl" alt="Selected Image" class="max-w-full h-full max-h-120 object-contain rounded-md shadow-md" />
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 pr-2 h-full"> 
+          <button nz-button nzType="text" nzShape="circle" (click)="clearImage(true)"
+                  class="text-red-500 bg-white bg-opacity-75 rounded-full p-1 shadow-md z-10"
+                  *ngIf="imageUrl">
+            <nz-icon nzType="close" nzTheme="outline" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 p-6 rounded-lg shadow-inner flex flex-col justify-between">
+      <div>
+        <h2 class="text-xl font-medium mb-4 text-gray-700">Generation options</h2>
+
+        <div class="mb-6">
+          <label class="block text-gray-600 font-medium mb-2">Generation method:</label>
+          <nz-radio-group [(ngModel)]="generationMethod" (ngModelChange)="onMethodChange()" nzButtonStyle="solid">
+            <label nz-radio-button nzValue="kmeans" class="mr-2">K-Means</label>
+            <label nz-radio-button nzValue="hierarchical" class="mr-2">Hierarchical with History</label>
+            <label nz-radio-button nzValue="som" class="mr-2">Self-organizing Map</label>
+          </nz-radio-group>
+        </div>
+
+        <div class="mb-6" *ngIf="generationMethod === 'kmeans'">
+          <label class="block text-gray-600 font-medium mb-2">Number of colors:</label>
+          <nz-input-number [(ngModel)]="numColors" [nzMin]="1" [nzMax]="16" [nzStep]="1"></nz-input-number>
+        </div>
+
+        <div class="mb-6" *ngIf="generationMethod === 'hierarchical'">
+          <label class="block text-gray-600 font-medium mb-2">Number of colors:</label>
+          <nz-input-number [(ngModel)]="numColors" [nzMin]="1" [nzMax]="8" [nzStep]="1"></nz-input-number>
+        </div>
+
+        <div class="mb-6" *ngIf="generationMethod === 'kmeans'">
+          <label class="block text-gray-600 font-medium mb-2">Smart Initialization:</label>
+          <nz-radio-group [(ngModel)]="useKMeansPP" nzButtonStyle="solid">
+            <label nz-radio-button [nzValue]="true">On</label>
+            <label nz-radio-button [nzValue]="false">Off</label>
+          </nz-radio-group>
+        </div>
+
+        <div class="mb-6" *ngIf="generationMethod === 'som'">
+          <label class="block text-gray-600 font-medium mb-2">Map Dimensions (Width x Height):</label>
+          <div class="flex items-center gap-2">
+            <nz-input-number [(ngModel)]="somMapWidth" [nzMin]="4" [nzMax]="30" [nzStep]="1"></nz-input-number>
+            <span class="text-gray-700">x</span>
+            <nz-input-number [(ngModel)]="somMapHeight" [nzMin]="4" [nzMax]="30" [nzStep]="1"></nz-input-number>
+          </div>
+        </div>
+
+        <div class="mb-6" *ngIf="generationMethod === 'hierarchical'">
+          <label class="block text-gray-600 font-medium mb-2">History Depth:</label>
+          <nz-radio-group [(ngModel)]="hierarchicalHistoryDepth" nzButtonStyle="solid">
+            <label nz-radio-button nzValue="shallow">Shallow</label>
+            <label nz-radio-button nzValue="medium">Medium</label>
+            <label nz-radio-button nzValue="deep">Deep</label>
+          </nz-radio-group>
+        </div>
+      </div>
+
+      <button nz-button nzType="primary" nzSize="large" class="w-full mt-4" (click)="generatePalette()" [nzLoading]="isLoading">
+        Generate
+      </button>
+    </div>
+  </div>
+
+  <hr class="my-12">
+
+  <div *ngIf="paletteHistory.length > 0" class="history-container mt-12">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold text-gray-800">Generation History</h2>
+      <button nz-button nzType="text" nzDanger (click)="clearHistory()">
+        <nz-icon nzType="delete" nzTheme="outline" class="mr-1"></nz-icon>
+        Clear History
+      </button>
+    </div>
+
+    <!-- better to be reworked to inherit common logic and elements -->
+
+    <div *ngFor="let item of paletteHistory; let i = index">
+      <app-palette-display 
+        *ngIf="item.method === 'kmeans' && item.palette" 
+        [paletteItem]="item"
+        (paletteSaved)="onPaletteSaved()"
+        (palettePublished)="onPalettePublished()">
+      </app-palette-display>
+    
+      <app-som-display
+        *ngIf="item.method === 'som' && item.kohonenMap"
+        [mapWidth]="somMapWidth"
+        [mapHeight]="somMapHeight"
+        [kohonenMap]="item.kohonenMap"
+        [paletteItem]="item"
+        (paletteSaved)="onPaletteSaved()"
+        (palettePublished)="onPalettePublished()">
+      </app-som-display>
+    
+      <app-hierarchical-history
+        *ngIf="item.method === 'hierarchical' && item.mergeHistory"
+        [paletteItem]="item"
+        [palette]="item.mergeHistory"
+        (paletteSaved)="onPaletteSaved()"
+        (palettePublished)="onPalettePublished()">
+      </app-hierarchical-history>
+    
+      <hr *ngIf="i < paletteHistory.length - 1" class="my-8 border-gray-200">
+    </div>
+  </div>

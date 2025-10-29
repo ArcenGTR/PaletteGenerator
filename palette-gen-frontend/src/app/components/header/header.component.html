@@ -1,0 +1,31 @@
+<header class="border-b border-gray-300 pb-4 p-4 flex justify-between items-center w-screen">
+    <div class="text-3xl font-bold text-black transition-all duration-300 ease-in-out hover:scale-101 cursor-pointer">
+        <span routerLink="/home">PaletteGen</span>
+    </div>
+
+    <div class="p-2">
+        <span nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+            <nz-icon nzType="ellipsis" nzTheme="outline" class="text-3xl transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer" />
+        </span>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item (click)="accountManagement()">
+                    <nz-icon nzType="user" nzTheme="outline" />
+                    <span class="ml-2">Account</span>
+                </li>
+                <li nz-menu-item routerLink="/home">
+                    <nz-icon nzType="table" nzTheme="outline" />
+                    <span class="ml-2">Generators</span>
+                </li>
+                <li nz-menu-item routerLink="/published-palettes">
+                    <nz-icon nzType="picture" nzTheme="outline" />
+                    <span class="ml-2">Published Palettes</span>
+                </li>
+                <li nz-menu-item (click)="logout()" *ngIf="keycloakService.isLoggedIn()">
+                    <nz-icon nzType="logout" nzTheme="outline" />
+                    <span class="ml-2">Logout</span>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+    </div>
+</header>
