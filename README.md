@@ -1,7 +1,7 @@
 <p align="center">
-<img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java"/>
-<img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular"/>
-<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java"/>
+  <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
 </p>
 
 An application designed for palette data processing using SOM, Hierarchical Clustering, and K-Means algorithms.
@@ -47,4 +47,13 @@ Security: Keycloak
 Infrastructure & Deployment: Docker, Docker Compose, Nginx, AWS (EC2)
 
 Clustering Algorithms: SOM, Hierarchical Clustering, K-Means
+
+
+<p align="center">
+  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQF3YiNhcJ8cGg/profile-treasury-image-shrink_800_800/B4EZowrGPPIQAY-/0/1761753195979?e=1762365600&v=beta&t=ItlC3QFMMO503E6JoQ64BqT1VnckMNbpPcMpsuz9-s4">
+  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQG5O9rO0gp06w/profile-treasury-image-shrink_800_800/B4EZowrLDjHoAY-/0/1761753216194?e=1762365600&v=beta&t=uIcS2MqZPrYXHPP2wlnM_VFW8VBW_JDy1oo5DZun5fg">
+  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQGPFrIUjL8GNg/profile-treasury-image-shrink_800_800/B4EZowq.rOGcAY-/0/1761753164997?e=1762365600&v=beta&t=GDiyxBW0RPZa0NTSpUt0bZPAa3HygOjvf-nZbfVwKK4">
+  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQFvx97D7wPg8A/profile-treasury-image-shrink_800_800/B4EZowq5_gGcAY-/0/1761753146088?e=1762365600&v=beta&t=6g3UQ9YFGsF6hWEV9mItTBMuJBeovWxNQ64DB2rKhVc">
+  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQFwsNICqxv8bA/profile-treasury-image-shrink_800_800/B4EZowraXhKgAY-/0/1761753278412?e=1762365600&v=beta&t=LVXM4JidyBWiaq6jxv5OaZyZDhKeLLvwnE-fpUoKJg0">
+</p>
 
