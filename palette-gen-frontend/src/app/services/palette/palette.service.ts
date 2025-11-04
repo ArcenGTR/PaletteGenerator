@@ -3,13 +3,14 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaletteItem } from '../../models/palette-item.model';
 import { Page } from '../../models/page.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaletteService {
 
-  private backendUrl = 'http://localhost:8080/api/v1/palette';
+  private backendUrl = `${environment.API_URI}/palette`;
 
   private http: HttpClient = inject(HttpClient);
 

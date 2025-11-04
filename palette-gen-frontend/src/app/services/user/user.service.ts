@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from '../../models/user.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private backendUrl = 'http://localhost:8080/api/v1/user';
+  private backendUrl = `${environment.API_URI}/user`;
 
   private http: HttpClient = inject(HttpClient);
 
