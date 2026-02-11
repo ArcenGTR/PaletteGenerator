@@ -52,12 +52,9 @@ Infrastructure & Deployment: Docker, Docker Compose, Nginx, AWS (EC2)
 
 Clustering Algorithms: SOM, Hierarchical Clustering, K-Means
 
-
-<p align="center">
-  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQF3YiNhcJ8cGg/profile-treasury-image-shrink_800_800/B4EZowrGPPIQAY-/0/1761753195979?e=1762365600&v=beta&t=ItlC3QFMMO503E6JoQ64BqT1VnckMNbpPcMpsuz9-s4">
-  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQG5O9rO0gp06w/profile-treasury-image-shrink_800_800/B4EZowrLDjHoAY-/0/1761753216194?e=1762365600&v=beta&t=uIcS2MqZPrYXHPP2wlnM_VFW8VBW_JDy1oo5DZun5fg">
-  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQGPFrIUjL8GNg/profile-treasury-image-shrink_800_800/B4EZowq.rOGcAY-/0/1761753164997?e=1762365600&v=beta&t=GDiyxBW0RPZa0NTSpUt0bZPAa3HygOjvf-nZbfVwKK4">
-  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQFvx97D7wPg8A/profile-treasury-image-shrink_800_800/B4EZowq5_gGcAY-/0/1761753146088?e=1762365600&v=beta&t=6g3UQ9YFGsF6hWEV9mItTBMuJBeovWxNQ64DB2rKhVc">
-  <img src="https://media.licdn.com/dms/image/v2/D4E2DAQFwsNICqxv8bA/profile-treasury-image-shrink_800_800/B4EZowraXhKgAY-/0/1761753278412?e=1762365600&v=beta&t=LVXM4JidyBWiaq6jxv5OaZyZDhKeLLvwnE-fpUoKJg0">
-</p>
+![1761753146088](https://github.com/user-attachments/assets/0af86ab4-f031-4bb2-a6a6-436da4ade410)
+![1761753164997](https://github.com/user-attachments/assets/2ca81ea4-0cbe-4170-8eb6-65acc95518ab)
+![1761753278412](https://github.com/user-attachments/assets/3ed0c5f7-030d-445f-8be3-074303c7c5de)
+![1761753216194](https://github.com/user-attachments/assets/14ffd53f-bb53-4a05-9d85-a477232add1c)
+![1761753195979](https://github.com/user-attachments/assets/7ce82c64-d33f-4a8b-95d7-562634a8801a)
 
